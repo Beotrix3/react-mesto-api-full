@@ -1,0 +1,22 @@
+.popup__info_type_login {
+  padding:0;
+  min-height: 27px;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 400;
+  color:#FFFFFF;
+  background-color: transparent;
+  border:none;
+  border-bottom: 2px solid #CCCCCC;
+  margin: 0 0 30px 0;
+  box-sizing: border-box;
+}
+
+.popup__info_type_login:last-of-type {
+  margin-bottom: 0;
+}
+
+.popup__info_type_login::placeholder {
+  color: #CCCCCC;
+}

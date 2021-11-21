@@ -1,0 +1,19 @@
+.popup__info{
+  font-size:14px;
+  line-height:17px;
+  font-weight: 400;
+  border:none;
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
+  padding-bottom:13px;
+  margin:30px 36px 0;
+}
+
+.popup__info:first-of-type{
+  margin-top:0;
+}
+
+@media (max-width: 625px) {
+  .popup__info {
+    margin:30px 22px 0;
+  }
+}
