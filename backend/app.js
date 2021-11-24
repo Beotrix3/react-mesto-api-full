@@ -20,8 +20,8 @@ const { PORT = 3001 } = process.env;
 const app = express();
 
 const allowedCors = [
-  'https://mesto.frontend.beotrix.nomoredomains.monster',
-  'https://api.mesto.beotrix.nomoredomains.monster',
+  'https://mesto.frontend.beotrix.nomoredomains.rocks',
+  'https://api.mesto.beotrix.nomoredomains.rocks',
   'localhost:3000',
 ];
 
