@@ -1,6 +1,7 @@
 /* eslint-disable import/order */
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -19,31 +20,20 @@ const { PORT = 3001 } = process.env;
 
 const app = express();
 
-const allowedCors = [
-  'https://mesto.frontend.beotrix.nomoredomains.rocks',
-  'https://api.mesto.beotrix.nomoredomains.rocks',
-  'localhost:3000',
-];
+const options = {
+  origin: [
+    'https://mesto.frontend.beotrix.nomoredomains.rocks',
+    'https://api.mesto.beotrix.nomoredomains.rocks',
+    'http://localhost:3000',
+  ],
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
+  credentials: true,
+};
 
-// eslint-disable-next-line consistent-return
-app.use((req, res, next) => {
-  const { origin } = req.headers;
-  const { method } = req;
-  const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
-  const requestHeaders = req.headers['access-control-request-headers'];
-  if (allowedCors.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-    res.header('Access-Control-Allow-Credentials', 'true');
-  }
-  if (method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
-    res.header('Access-Control-Allow-Headers', requestHeaders);
-
-    return res.status(200).send();
-  }
-
-  next();
-});
+app.use('*', cors(options));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
