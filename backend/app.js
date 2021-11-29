@@ -16,7 +16,7 @@ const { validLogin, validUser } = require('./middlewares/validation');
 const NotFound = require('./errors/NotFound');
 const rateLimit = require('express-rate-limit');
 
-const { PORT = 3001 } = process.env;
+const { PORT = 3000 } = process.env;
 
 const app = express();
 
