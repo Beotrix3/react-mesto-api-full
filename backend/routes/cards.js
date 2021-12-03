@@ -1,4 +1,3 @@
-/* eslint-disable comma-dangle */
 const { Router } = require('express');
 
 const {
@@ -11,7 +10,7 @@ const {
 
 const {
   validCard,
-  validId
+  validId,
 } = require('../middlewares/validation');
 
 const cardsRouter = Router();

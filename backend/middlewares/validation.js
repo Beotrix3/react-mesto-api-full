@@ -1,6 +1,5 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
 const { celebrate, Joi } = require('celebrate');
+const validator = require('validator');
 
 const validCustom = (url) => {
   const result = validator.isURL(url);

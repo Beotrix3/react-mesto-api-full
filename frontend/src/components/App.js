@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import Header from './Header.js';
@@ -59,8 +60,8 @@ function App() {
 
   function onUpdateUser(userData) {
     api.setUserInfoApi(userData)
-      .then((data) => {
-        setCurrentUser(data)
+      .then((user) => {
+        setCurrentUser(user.data)
         closeAllPopups()
       })
       .catch((err) => console.log(err))
@@ -68,8 +69,8 @@ function App() {
 
   function onUpdateAvatar(userData) {
     api.handleUserAvatar(userData)
-      .then((data) => {
-        setCurrentUser(data)
+      .then((user) => {
+        setCurrentUser(user.data)
         closeAllPopups()
       })
       .catch((err) => console.log(err))
@@ -77,12 +78,12 @@ function App() {
 
   function handleCardLike(card) {
     // Проверка, есть ли лайк на этой карточке
-    const isLiked = card.likes.some(i => i._id === currentUser._id)
+    const isLiked = card.likes.some(id => id === currentUser._id)
     
     // Отправка запроса в API и получение обновлённых данных карточки
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c))
+        setCards((state) => state.map((c) => c._id === card._id ? newCard.data : c))
       })
       .catch((err) => console.log(err))
   }
@@ -90,7 +91,7 @@ function App() {
   function handleCardDelete(card) {
     api.delete(card._id)
       .then(() => {
-        setCards(cards.filter((i) => i !== card))
+        setCards(cards => cards.filter((item) => item !== card))
       })
       .catch((err) => console.log(err))
   }
@@ -98,50 +99,54 @@ function App() {
   function handleAddPlaceSubmit(cardData) {
     api.addUserCard(cardData)
       .then((newCard) => {
-        setCards([newCard, ...cards])
+        setCards([newCard.data, ...cards])
         closeAllPopups()
       })
       .catch((err) => console.log(err))
   }
 
   useEffect(() => {
-    api.getInitialCards()
-      .then((data) => {
-        setCards(data)
-      })
-      .catch((err) => console.log(err))
-  }, [])
-
-  useEffect(() => {
-    api.getUserInfo()
-      .then((data) => {
-        setCurrentUser(data)
-      })
-      .catch((err) => console.log(err))
-  }, [])
-
-  useEffect(() => {
-    const jwt = localStorage.getItem('jwt')
-  
-    if(jwt) {
-      auth.getContent(jwt)
-        .then((res) => {
-          if(res) {
-            setLoggedIn(true)
-            setEmail(res.data.email)
-            history.push('/')
-          }
+    if (loggedIn) {
+      api.getInitialCards()
+        .then((cardsObj) => {
+          setCards(cardsObj.data.reverse())
         })
         .catch((err) => console.log(err))
     }
-  }, [history])
+  }, [loggedIn])
+
+  useEffect(() => {
+    if (loggedIn) {
+      api.getUserInfo()
+        .then((user) => {
+          setCurrentUser(user.currentUser)
+        })
+        .catch((err) => console.log(err))
+    }
+  }, [loggedIn])
+
+  useEffect(() => {
+    tokenCheck()
+  }, [])
+
+  function tokenCheck() {
+    auth.getContent()
+      .then((res) => {
+        if(res) {
+          setLoggedIn(true)
+          setEmail(res.currentUser.email)
+          history.push('/')
+        }
+      })
+      .catch((err) => console.log(err))
+  }
 
   function handleAuthorization(password, email) {
     auth.authorize(password, email)
       .then((token) => {
         auth.getContent(token)
           .then((res) => {
-            setEmail(res.data.email)
+            setEmail(res.currentUser.email)
             setLoggedIn(true)
             history.push('/')
           })
@@ -160,8 +165,11 @@ function App() {
   }
 
   function onSignOut() {
-    localStorage.removeItem('jwt')
+    auth.logout()
     setLoggedIn(false)
+    setCards([])
+    setCurrentUser({})
+    history.push('/sign-in')
   }
 
   return (
@@ -188,7 +196,7 @@ function App() {
             cards={cards}
           />
 
-          <Route path='/sign-in'>
+          <Route path='/sign-up'>
 
             <Register 
               isOpen={isEditProfilePopupOpen}
@@ -198,7 +206,7 @@ function App() {
 
           </Route>
 
-          <Route path='/sign-up'>
+          <Route path='/sign-in'>
 
             <Login
               isOpen={isEditProfilePopupOpen}
