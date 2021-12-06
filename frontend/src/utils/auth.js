@@ -5,6 +5,7 @@ const handleResponse = response => response.ok ? response.json() : Promise.rejec
 export const logout = () => {
   return fetch(`${BASE_URL}/logout`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       "Content-Type": "application/json"
     }
@@ -14,6 +15,7 @@ export const logout = () => {
 export const register = (password, email) => {
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       "Content-Type": "application/json"
     },
@@ -25,6 +27,7 @@ export const register = (password, email) => {
 export const authorize = (password, email) => {
   return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       "Content-Type": "application/json"
     },
@@ -42,6 +45,7 @@ export const authorize = (password, email) => {
 export const getContent = token => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
+    credentials: 'include',
     headers: {
       "Content-Type": "application/json",
       "Authorization" : `Bearer ${token}`

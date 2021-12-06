@@ -94,7 +94,6 @@ const api = new Api({
   url: 'https://api.mesto.beotrix.nomoredomains.rocks',
   credentials: 'include',
   headers: {
-    "authorization": '442d7c15-d132-449b-929f-8694ae0bf753',
     'Content-Type': 'application/json'
   }
 })
