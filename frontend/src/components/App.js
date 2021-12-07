@@ -129,19 +129,16 @@ function App() {
     tokenCheck()
   }, [])
 
-  const tokenCheck = () => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      auth.getContent()
-        .then((res) => {
-          if(res) {
-            setLoggedIn(true)
-            setEmail(res.currentUser.email)
-            history.push('/')
-          }
-        })
-        .catch((err) => console.log(err))
-    }
+  function tokenCheck() {
+    auth.getContent()
+      .then((res) => {
+        if(res) {
+          setLoggedIn(true)
+          setEmail(res.currentUser.email)
+          history.push('/')
+        }
+      })
+      .catch((err) => console.log(err))
   }
   
   function handleAuthorization(password, email) {

@@ -34,6 +34,7 @@ function AddPlacePopup({ isOpen, onAddPlace, onClose }) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      isModal={true}
     >
       <input id="title" name="name" type="text" className="popup__info popup__info_type_title" placeholder="Название" minLength="2" maxLength="30" required onChange={handleNameChange} value={name}/>
       <span id="title-error" className="popup__input-error popupTitle-input-error"></span>
