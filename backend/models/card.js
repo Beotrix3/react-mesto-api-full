@@ -1,7 +1,6 @@
 const { Schema, model } = require('mongoose');
 
 // eslint-disable-next-line no-useless-escape
-const linkRegex = /(http:\/\/|https:\/\/)(www)*[a-z0-9\-\.\_\~\:\/\?\#\[\]\@\!\$\&\'\(\)\*\+\,\;\=]+#*/;
 
 const cardSchema = new Schema({
   name: {
@@ -13,12 +12,7 @@ const cardSchema = new Schema({
   link: {
     type: String,
     required: true,
-    validate: {
-      validator(link) {
-        return linkRegex.test(link);
-      },
-      message: 'Cсылка',
-    },
+    message: 'Cсылка',
   },
   owner: {
     type: Schema.Types.ObjectId,
