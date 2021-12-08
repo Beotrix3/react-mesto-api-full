@@ -12,7 +12,7 @@ class Api {
   }
 
   getUserInfo() {
-    return fetch(this._url + `/users/me`, {
+    return fetch(this._url + '/users/me', {
       credentials: 'include',
       method: 'GET',
       headers: this._headers
@@ -21,8 +21,7 @@ class Api {
   }
 
   getInitialCards() {
-    console.log(this._headers)
-    return fetch(this._url + `/cards`, {
+    return fetch(this._url + '/cards', {
       credentials: 'include',
       method: 'GET',
       headers: this._headers
@@ -31,7 +30,7 @@ class Api {
   }
 
   setUserInfoApi(userData) {
-    return fetch(this._url + `/users/me`, {
+    return fetch(this._url + '/users/me', {
       credentials: 'include',
       method: 'PATCH',
       headers: this._headers,
@@ -56,7 +55,7 @@ class Api {
   }
 
   addUserCard(data) {
-    return fetch(this._url + `/cards`, {
+    return fetch(this._url + '/cards', {
       credentials: 'include',
       method: 'POST',
       headers: this._headers,
